@@ -174,8 +174,11 @@ var circleBackend = function(settings, resultCallback) {
             return acc.concat(
                Object.keys(repository.branches).map(function(branchName) {
                   var branch = repository.branches[branchName]
-                  var buildIsRunning = branch.running_builds.length != 0
-                  var build = buildIsRunning ? branch.running_builds[0] : branch.recent_builds[0]
+                  var buildIsRunning = branch.running_builds == undefined ? false : branch.running_builds.length != 0
+                  if (branch.running_builds == undefined) 
+                     var build = ''
+                  else
+                     var build = buildIsRunning ? branch.running_builds[0] : branch.recent_builds[0]
                   var status = buildIsRunning ? build.status : build.outcome
                   return {
                      repository: repository.reponame,
